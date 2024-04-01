@@ -2,7 +2,6 @@
   "name": "calips-labs/scaleway-object-storage",
   "description": "Scaleway Object Storage integration for Craft CMS",
   "type": "craft-plugin",
-  "version": "1.0.0",
   "keywords": [
     "s3",
     "cms",
