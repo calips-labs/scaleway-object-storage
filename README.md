@@ -14,22 +14,31 @@ To install the plugin, follow these instructions.
 
         cd /path/to/project
 
-2. Then tell Composer to load the plugin:
+2. Then tell composer to load the plugin:
 
         composer require calips-labs/scaleway-object-storage
 
 3. Navigate to Settings -> Plugins and click the "Install" button for Scaleway Object Storage.
 
-## Configuring filesystem
+## API keys
+
+You can create an API key in the [Scaleway console](https://console.scaleway.com/iam/api-keys).
+An API key consists of an Access Key ID and a Secret Access Key.
+
+When you configure an API key, make sure that it has access to the bucket you want to use.
+At least the following permissions are
+needed: `ObjectStorageBucketsRead`, `ObjectStorageObjectsRead`, `ObjectStorageObjectsWrite`, `ObjectStorageObjectsDelete`.
+
+## Configuring a new filesystem
 
 1. Navigate to Settings -> Filesystems and click the "New Filesystem" button.
 2. Select "Scaleway Object Storage" from the "Filesystem Type" dropdown.
-3. Enter your Account ID, Access Key ID, and Secret Access Key (it's recommended to store these in your `.env` file and
+3. Select the region for your bucket.
+4. Enter your Access Key ID, and Secret Access Key (it's recommended to store these in your `.env` file and
    reference the environment variables here).
-4. Hit Refresh to load the bucket list, or choose the Manual option and enter the bucket name (again, you can store this
-   in your `.env` file and reference the environment variable).
-5. Optionally add a Subfolder, determine whether or not to add the Subfolder to the Base URL, and set the Cache Control
-   duration.
+5. Hit Refresh to load the bucket list, or choose the Manual option and enter the bucket name. (The bucket name can also
+   be stored in your `.env` file and be referenced here.)
+6. Save the filesystem.
 
 ## Misc
 
