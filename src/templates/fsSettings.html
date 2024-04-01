@@ -11,16 +11,6 @@
 }) }}
 
 {{ forms.autosuggestField({
-    label: "Account ID"|t('scaleway-object-storage'),
-    id: 'accountId',
-    name: 'accountId',
-    suggestEnvVars: true,
-    value: fs.accountId,
-    errors: fs.getErrors('accountId'),
-    class: 'scaleway-account-id'
-}) }}
-
-{{ forms.autosuggestField({
     label: "Access Key ID"|t('scaleway-object-storage'),
     id: 'keyId',
     name: 'keyId',

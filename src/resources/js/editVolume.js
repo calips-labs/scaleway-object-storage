@@ -1,26 +1,26 @@
 $(document).ready(function () {
-  const $s3AccessKeyIdInput = $('.scaleway-key-id');
-  const $s3SecretAccessKeyInput = $('.scaleway-secret-key');
+  const $scalewayAccessKeyIdInput = $('.scaleway-key-id');
+  const $scalewaySecretAccessKeyInput = $('.scaleway-secret-key');
   const $bucketRegion = $('.scaleway-region');
-  const $s3BucketSelect = $('.s3-bucket-select > select');
-  const $s3RefreshBucketsBtn = $('.s3-refresh-buckets');
-  const $s3RefreshBucketsSpinner = $s3RefreshBucketsBtn.parent().next().children();
+  const $scalewayBucketSelect = $('.s3-bucket-select > select');
+  const $scalewayRefreshBucketsBtn = $('.s3-refresh-buckets');
+  const $scalewayRefreshBucketsSpinner = $scalewayRefreshBucketsBtn.parent().next().children();
   const $manualBucket = $('.s3-manualBucket');
   const $fsUrl = $('.fs-url');
   const $hasUrls = $('input[name=hasUrls]');
   let refreshingS3Buckets = false;
 
-  $s3RefreshBucketsBtn.click(function() {
-    if ($s3RefreshBucketsBtn.hasClass('disabled')) {
+  $scalewayRefreshBucketsBtn.click(function() {
+    if ($scalewayRefreshBucketsBtn.hasClass('disabled')) {
       return;
     }
 
-    $s3RefreshBucketsBtn.addClass('disabled');
-    $s3RefreshBucketsSpinner.removeClass('hidden');
+    $scalewayRefreshBucketsBtn.addClass('disabled');
+    $scalewayRefreshBucketsSpinner.removeClass('hidden');
 
     const data = {
-      keyId: $s3AccessKeyIdInput.val(),
-      secret: $s3SecretAccessKeyInput.val(),
+      keyId: $scalewayAccessKeyIdInput.val(),
+      secret: $scalewaySecretAccessKeyInput.val(),
       region: $bucketRegion.val(),
     };
 
@@ -30,46 +30,46 @@ $(document).ready(function () {
           return;
         }
         //
-        const currentBucket = $s3BucketSelect.val();
+        const currentBucket = $scalewayBucketSelect.val();
         let currentBucketStillExists = false;
 
         refreshingS3Buckets = true;
 
-        $s3BucketSelect.prop('readonly', false).empty();
+        $scalewayBucketSelect.prop('readonly', false).empty();
 
         for (let i = 0; i < data.buckets.length; i++) {
           if (data.buckets[i].bucket == currentBucket) {
             currentBucketStillExists = true;
           }
 
-          $s3BucketSelect.append('<option value="' + data.buckets[i].bucket + '" data-url-prefix="' + data.buckets[i].urlPrefix + '">' + data.buckets[i].bucket + '</option>');
+          $scalewayBucketSelect.append('<option value="' + data.buckets[i].bucket + '" data-url-prefix="' + data.buckets[i].urlPrefix + '">' + data.buckets[i].bucket + '</option>');
         }
 
         if (currentBucketStillExists) {
-          $s3BucketSelect.val(currentBucket);
+          $scalewayBucketSelect.val(currentBucket);
         }
 
         refreshingS3Buckets = false;
 
         if (!currentBucketStillExists) {
-          $s3BucketSelect.trigger('change');
+          $scalewayBucketSelect.trigger('change');
         }
       })
       .catch(({response}) => {
         alert(response.data.message);
       })
       .finally(() => {
-        $s3RefreshBucketsBtn.removeClass('disabled');
-        $s3RefreshBucketsSpinner.addClass('hidden');
+        $scalewayRefreshBucketsBtn.removeClass('disabled');
+        $scalewayRefreshBucketsSpinner.addClass('hidden');
       });
   });
 
-  $s3BucketSelect.change(function() {
+  $scalewayBucketSelect.change(function() {
     if (refreshingS3Buckets) {
       return;
     }
 
-    const $selectedOption = $s3BucketSelect.children('option:selected');
+    const $selectedOption = $scalewayBucketSelect.children('option:selected');
 
     $fsUrl.val($selectedOption.data('url-prefix'));
   });

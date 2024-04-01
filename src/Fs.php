@@ -72,17 +72,12 @@ class Fs extends FlysystemFs
     public string $subfolder = '';
 
     /**
-     * @var string R2 account ID
-     */
-    public string $accountId = '';
-
-    /**
-     * @var string R2 key ID
+     * @var string Access key ID
      */
     public string $keyId = '';
 
     /**
-     * @var string R2 key secret
+     * @var string Access key secret
      */
     public string $secret = '';
 
@@ -109,7 +104,7 @@ class Fs extends FlysystemFs
     /**
      * @var bool Set ACL for Uploads
      */
-    public bool $makeUploadsPublic = false;
+    public bool $makeUploadsPublic = true;
 
     /**
      * @var string S3 storage class to use.
@@ -155,7 +150,6 @@ class Fs extends FlysystemFs
         $behaviors['parser'] = [
             'class' => EnvAttributeParserBehavior::class,
             'attributes' => [
-				'accountId',
                 'keyId',
                 'secret',
                 'bucket',
@@ -190,15 +184,15 @@ class Fs extends FlysystemFs
     /**
      * Get the bucket list using the specified credentials.
      *
-     * @param string|null $accountId The account ID
 	 * @param string|null $keyId The key ID
      * @param string|null $secret The key secret
+     * @param string|null $region The region
      * @return array
      * @throws InvalidArgumentException
      */
-    public static function loadBucketList(?string $accountId, ?string $keyId, ?string $secret, ?string $region): array
+    public static function loadBucketList(?string $keyId, ?string $secret, ?string $region): array
     {
-        $config = self::buildConfigArray($keyId, $secret, $accountId, $region);
+        $config = self::buildConfigArray($keyId, $secret, $region);
 
         $client = static::client($config);
 
@@ -262,7 +256,6 @@ class Fs extends FlysystemFs
                 $args = [
                     $credentials['keyId'],
                     $credentials['secret'],
-                    $credentials['accountId'],
                     $credentials['region'],
                     true,
                 ];
@@ -352,16 +345,14 @@ class Fs extends FlysystemFs
      *
      * @param ?string $keyId The key ID
      * @param ?string $secret The key secret
-     * @param ?string $accountId The account id
      * @param bool $refreshToken If true will always refresh token
      * @return array
      */
-    public static function buildConfigArray(?string $keyId = null, ?string $secret = null, ?string $accountId = null, ?string $region = null, bool $refreshToken = false): array
+    public static function buildConfigArray(?string $keyId = null, ?string $secret = null, ?string $region = null, bool $refreshToken = false): array
     {
 		$config = [
             'region' => $region,
             'endpoint' => 'https://s3.' . $region . '.scw.cloud/',
-//			'endpoint' => 'https://'.$accountId.'.r2.cloudflarestorage.com',
             'version' => 'latest',
 			'credentials' => new Credentials($keyId, $secret)
         ];
@@ -408,7 +399,7 @@ class Fs extends FlysystemFs
     {
         $credentials = $this->_getCredentials();
 
-        return self::buildConfigArray($credentials['keyId'], $credentials['secret'], $credentials['accountId'], $credentials['region']);
+        return self::buildConfigArray($credentials['keyId'], $credentials['secret'], $credentials['region']);
     }
 
     /**
@@ -421,7 +412,6 @@ class Fs extends FlysystemFs
         return [
             'keyId' => App::parseEnv($this->keyId),
             'secret' => App::parseEnv($this->secret),
-            'accountId' => App::parseEnv($this->accountId),
             'region' => App::parseEnv($this->region),
         ];
     }
