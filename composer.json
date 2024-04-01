@@ -1,0 +1,65 @@
+{
+  "name": "calips-labs/scaleway-object-storage",
+  "description": "Scaleway Object Storage integration for Craft CMS",
+  "type": "craft-plugin",
+  "version": "1.0.0",
+  "keywords": [
+    "s3",
+    "cms",
+    "craftcms",
+    "flysystem",
+	"scaleway",
+    "object-storage",
+    "assets",
+    "yii2"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Calips",
+      "homepage": "https://calips.nl/"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/calips-labs/scaleway-object-storage/issues",
+    "docs": "https://github.com/calips-labs/scaleway-object-storage"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8.0.2",
+    "craftcms/cms": "^4.0.0-beta.1 || ^5.0.0-beta.1",
+    "craftcms/flysystem": "^1.0.0 || ^2.0.0",
+    "league/flysystem-aws-s3-v3": "^3.0.0"
+  },
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main",
+    "craftcms/rector": "dev-main"
+  },
+  "autoload": {
+    "psr-4": {
+      "calips\\scaleway_object_storage\\": "src/"
+    }
+  },
+  "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G"
+  },
+  "extra": {
+    "name": "Scaleway Object Storage",
+    "handle": "scaleway-object-storage",
+    "developer": "Calips BV",
+    "documentationUrl": "https://github.com/calips-labs/scaleway-object-storage"
+  },
+  "config": {
+    "platform": {
+      "php": "8.0.2"
+    },
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  }
+}
