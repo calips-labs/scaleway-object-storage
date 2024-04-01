@@ -208,7 +208,7 @@ class Fs extends FlysystemFs
         foreach ($buckets as $bucket) {
             $bucketList[] = [
                 'bucket' => $bucket['Name'],
-                'urlPrefix' => 'https://s3.' . $region . '.scw.cloud/' . $bucket['Name'] . '/',
+                'urlPrefix' => 'https://' . $bucket['Name'] . '.s3.' . $region . '.scw.cloud/',
             ];
         }
 

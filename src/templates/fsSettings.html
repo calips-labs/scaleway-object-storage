@@ -1,13 +1,15 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.autosuggestField({
+{{ forms.selectField({
     label: "Region"|t('scaleway-object-storage'),
     id: 'region',
     name: 'region',
-    suggestEnvVars: true,
+    options: { 'fr-par': 'fr-par (Paris)', 'nl-ams': 'nl-ams (Amsterdam)', 'pl-waw': 'pl-waw (Warsaw)' },
     value: fs.region,
+    class: 'scaleway-region',
     errors: fs.getErrors('region'),
-    class: 'scaleway-region'
+    instructions: "The region where your bucket is located."|t('scaleway-object-storage'),
+    required: true
 }) }}
 
 {{ forms.autosuggestField({
@@ -17,7 +19,8 @@
     suggestEnvVars: true,
     value: fs.keyId,
     errors: fs.getErrors('keyId'),
-    class: 'scaleway-key-id'
+    class: 'scaleway-key-id',
+    required: true,
 }) }}
 
 {{ forms.autosuggestField({
@@ -27,7 +30,8 @@
     suggestEnvVars: true,
     value: fs.secret,
     errors: fs.getErrors('secret'),
-    class: 'scaleway-secret-key'
+    class: 'scaleway-secret-key',
+    required: true,
 }) }}
 
 {% set bucketInput %}

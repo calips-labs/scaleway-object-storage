@@ -21,7 +21,7 @@ $(document).ready(function () {
     const data = {
       keyId: $scalewayAccessKeyIdInput.val(),
       secret: $scalewaySecretAccessKeyInput.val(),
-      region: $bucketRegion.val(),
+      region: $bucketRegion.find(":selected").val(),
     };
 
     Craft.sendActionRequest('POST', 'scaleway-object-storage/buckets/load-bucket-data', {data})
